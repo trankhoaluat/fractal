@@ -9,7 +9,6 @@ namespace
   constexpr int rgb_pixel_size = 3;
   constexpr int max_thead_num = 8;
 
-  // mandelbrot set: f(z) = z^2 + c
   int mandelbrot(const float real, const float imag, const int max_count)
   {
     float z_real = real;
@@ -29,9 +28,9 @@ namespace
   {
     const float c_real = -0.8;  //-0.4;
     const float c_imag = 0.156; // 0.6;
+
     float z_real = real;
     float z_imag = imag;
-
     int count = 0;
     while (z_real * z_real + z_imag * z_imag < radius_sqr and ++count < max_count)
     {
