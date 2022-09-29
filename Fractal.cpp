@@ -1,4 +1,5 @@
 #include <fstream>
+#include <complex.h>
 #include <vector>
 #include <omp.h>
 
@@ -9,6 +10,32 @@ namespace
   constexpr int rgb_pixel_size = 3;
   constexpr int max_thead_num = 8;
 
+  // implemenation using complex numbers
+  int mandelbrot_comp(const float real, const float imag, const int max_count)
+  {
+    const std::complex<float> c(real, imag);
+    std::complex<float> z(real, imag);
+    int count = 0;
+    while (std::norm(z) < radius_sqr and ++count < max_count)
+    {
+      z = z * z + c;
+    }
+    return count;
+  };
+
+  int julia_comp(const float real, const float imag, const int max_count)
+  {
+    const std::complex<float> c(-0.8, 0.156);
+    std::complex<float> z(real, imag);
+    int count = 0;
+    while (std::norm(z) < radius_sqr and ++count < max_count)
+    {
+      z = z * z + c;
+    }
+    return count;
+  }
+  
+  // implematation using c-like approach  
   int mandelbrot(const float real, const float imag, const int max_count)
   {
     float z_real = real;
@@ -23,7 +50,6 @@ namespace
     return count;
   };
 
-  // julia set with: z = z^2 + c(-0.8, 0.156)
   int julia(const float real, const float imag, const int max_count)
   {
     const float c_real = -0.8;  //-0.4;
@@ -60,9 +86,13 @@ void generate_fractal_set(const FractalRule rule,
 #pragma omp parallel for shared(fractal_data)
   for (int j = 0; j < ny; ++j)
   {
-    for (int index = j * nx, i = 0; i < nx; ++i)
+    int index = j * nx;
+    float x = x_start;
+    const float y = y_start + j * dy;
+    for (int i = 0; i < nx; ++i)
     {
-      fractal_data[index++] = rule(x_start + i * dx, y_start + j * dy, max_count);
+      fractal_data[index++] = rule(x, y, max_count);
+      x += dx;
     }
   }
 };
