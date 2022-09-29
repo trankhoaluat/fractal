@@ -10,7 +10,7 @@ namespace
   constexpr int rgb_pixel_size = 3;
   constexpr int max_thead_num = 8;
 
-  // implemenation using complex numbers
+  // implementation using complex numbers
   int mandelbrot_comp(const float real, const float imag, const int max_count)
   {
     const std::complex<float> c(real, imag);
@@ -35,7 +35,7 @@ namespace
     return count;
   }
   
-  // implematation using c-like approach  
+  // implementation using c-like approach  
   int mandelbrot(const float real, const float imag, const int max_count)
   {
     float z_real = real;
