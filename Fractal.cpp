@@ -133,7 +133,7 @@ void write_ppm(const std::string &name, const std::vector<char> &shades, const i
          << bitdepth << '\n';
 
   // 3. write image data
-  stream.write(shades.data(), shades.size() * sizeof(int));
+  stream.write(shades.data(), shades.size() * sizeof(char));
   stream.close();
 }
 
