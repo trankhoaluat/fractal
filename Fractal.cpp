@@ -122,6 +122,12 @@ void write_ppm(const std::string &name, const std::vector<char> &shades, const i
 {
   // 1. validate input data
   std::ofstream stream(name.c_str(), std::ios::out | std::ios::binary);
+
+  if (!stream.is_open())
+  {
+    throw std::runtime_error("could not open the file");
+  }
+  
   if (shades.size() != nx * ny * rgb_pixel_size)
   {
     throw std::runtime_error("image buffer size and image size mismatch");
